@@ -6,14 +6,18 @@ import React, { useState } from 'react'
 const RegisterPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [creatingUser, setCreatingUser] = useState(false)
+  const [userCreated, setUserCreated] = useState(false)
 
-  function handleFormSubmit(ev) {
+  async function handleFormSubmit(ev) {
     ev.preventDefault()
-    fetch('/api/register', {
+    setCreatingUser(true)
+    await fetch('/api/register', {
       method: 'POST',
       body: JSON.stringify({ email, password }),
       headers: { 'Content-Type': 'application/json' },
     })
+    setCreatingUser(false)
   }
 
   return (
@@ -24,15 +28,19 @@ const RegisterPage = () => {
           type="email"
           placeholder="email"
           value={email}
+          disabled={creatingUser}
           onChange={(ev) => setEmail(ev.target.value)}
         />
         <input
           type="password"
           placeholder="password"
           value={password}
+          disabled={creatingUser}
           onChange={(ev) => setPassword(ev.target.value)}
         />
-        <button type="submit">Register</button>
+        <button type="submit" disabled={creatingUser}>
+          Register
+        </button>
         <div className="my-4 text-center text-gray-500">
           or login with provider
         </div>
