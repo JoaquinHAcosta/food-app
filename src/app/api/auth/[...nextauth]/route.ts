@@ -1,12 +1,17 @@
+import bcrypt from 'bcrypt'
+import { User } from '@/models/User'
+import * as mongoose from 'mongoose'
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
 const handler = NextAuth({
+  secret: process.env.SECRET,
   providers: [
     CredentialsProvider({
       name: 'Credentials',
+      id: 'credentials',
       credentials: {
-        username: {
+        email: {
           label: 'Email',
           type: 'email',
           placeholder: 'test@example.com',
@@ -14,24 +19,16 @@ const handler = NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials, req) {
-        // You need to provide your own logic here that takes the credentials
-        // submitted and returns either a object representing a user or value
-        // that is false/null if the credentials are invalid.
-        // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
-        // You can also use the `req` object to obtain additional parameters
-        // (i.e., the request IP address)
-        const res = await fetch('/your/endpoint', {
-          method: 'POST',
-          body: JSON.stringify(credentials),
-          headers: { 'Content-Type': 'application/json' },
-        })
-        const user = await res.json()
+        const email = credentials?.email
+        const password = credentials?.password
 
-        // If no error and we have user data, return it
-        if (res.ok && user) {
+        mongoose.connect(process.env.MONGO_URL)
+        const user = await User.findOne({ email })
+        const passwordOk = user && bcrypt.compareSync(password, user.password)
+
+        if (passwordOk) {
           return user
         }
-        // Return null if user data could not be retrieved
         return null
       },
     }),
