@@ -17,7 +17,7 @@ const UserSchema = new Schema(
   { timestamps: true }
 )
 
-//hash of passwords
+//hash of password
 
 UserSchema.post('validate', (user) => {
   const notHashedPassword = user.password
