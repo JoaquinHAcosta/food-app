@@ -12,7 +12,7 @@ const LoginPage = () => {
     event.preventDefault()
     setLoginInProgress(true)
 
-    await signIn('credentials', { email, password, callbackUrl: '/' })
+    await signIn('credentials', { email, password })
 
     setLoginInProgress(false)
   }
@@ -43,6 +43,7 @@ const LoginPage = () => {
         </div>
         <button
           className="flex gap-4 justify-center"
+          type="button"
           onClick={() => signIn('google', { callbackUrl: '/' })}
           disabled={loginInProgress}
         >
