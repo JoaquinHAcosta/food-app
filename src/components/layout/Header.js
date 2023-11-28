@@ -27,7 +27,7 @@ const header = () => {
             Logout
           </button>
         )}
-        {status !== 'authenticated' && (
+        {status === 'unauthenticated' && (
           <>
             <Link href={'/login'}>Login</Link>
             <Link
