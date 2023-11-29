@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { redirect } from 'next/navigation'
 import Image from 'next/image'
@@ -7,8 +7,22 @@ import Image from 'next/image'
 const ProfilePage = () => {
   const session = useSession()
 
-  const [userName, setUserName] = useState(session?.data?.user?.name || '')
+  const [userName, setUserName] = useState('')
   const { status } = session
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      setUserName(session?.data?.user?.name)
+    }
+  }, [session, status])
+  const handleProfileInfoUpdate = async (ev) => {
+    ev.preventDefault()
+    const response = await fetch('/api/profile', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ name: userName }),
+    })
+  }
 
   if (status === 'loading') {
     return 'Loading...'
@@ -23,7 +37,7 @@ const ProfilePage = () => {
   return (
     <section className="mt-8">
       <h1 className="text-center text-primary text-4xl mb-4">Profile</h1>
-      <form className="max-w-md mx-auto ">
+      <div className="max-w-md mx-auto ">
         <div className="flex gap-4 items-center">
           <div>
             <div className="p-2 rounded-lg relative">
@@ -37,7 +51,7 @@ const ProfilePage = () => {
               <button type="button">Edit</button>
             </div>
           </div>
-          <div className="grow">
+          <form className="grow" onSubmit={handleProfileInfoUpdate}>
             <input
               type="text"
               value={userName}
@@ -51,9 +65,9 @@ const ProfilePage = () => {
               placeholder="First and last name"
             />
             <button type="submit">Save</button>
-          </div>
+          </form>
         </div>
-      </form>
+      </div>
     </section>
   )
 }
