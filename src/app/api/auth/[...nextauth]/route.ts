@@ -19,7 +19,7 @@ const handler = NextAuth({
       name: 'Credentials',
       id: 'credentials',
       credentials: {
-        email: {
+        username: {
           label: 'Email',
           type: 'email',
           placeholder: 'test@example.com',
@@ -29,6 +29,7 @@ const handler = NextAuth({
       async authorize(credentials, req) {
         const email = credentials?.email
         const password = credentials?.password
+        console.log(credentials)
 
         mongoose.connect(process.env.MONGO_URL)
         const user = await User.findOne({ email })
@@ -37,6 +38,7 @@ const handler = NextAuth({
         if (passwordOk) {
           return user
         }
+
         return null
       },
     }),

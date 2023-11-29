@@ -11,8 +11,11 @@ const LoginPage = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault()
     setLoginInProgress(true)
-
-    await signIn('credentials', { email, password })
+    await signIn('credentials', {
+      email,
+      password,
+      callbackUrl: '/',
+    })
 
     setLoginInProgress(false)
   }

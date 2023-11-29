@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
+import { signIn } from 'next-auth/react'
 
 const RegisterPage = () => {
   const [email, setEmail] = useState('')
@@ -71,6 +72,7 @@ const RegisterPage = () => {
         </div>
         <button
           onClick={() => signIn('google', { callbackUrl: '/' })}
+          type="button"
           className="flex gap-4 justify-center"
         >
           <Image src={'/google.png'} alt="logo google" width={24} height={24} />
