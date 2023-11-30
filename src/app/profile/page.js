@@ -3,17 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { redirect } from 'next/navigation'
 import Image from 'next/image'
-import InfoBox from '@/components/layout/InfoBox'
-import SuccessBox from '@/components/layout/SuccessBox'
+import toast from 'react-hot-toast'
 
 const ProfilePage = () => {
   const session = useSession()
 
   const [userName, setUserName] = useState('')
   const [image, setImage] = useState('')
-  const [saved, setSaved] = useState(false)
-  const [isSaving, setIsSaving] = useState(false)
-  const [isUploading, setIsUploading] = useState(false)
   const { status } = session
 
   useEffect(() => {
@@ -25,17 +21,21 @@ const ProfilePage = () => {
 
   const handleProfileInfoUpdate = async (ev) => {
     ev.preventDefault()
-    setSaved(false)
-    setIsSaving(true)
-    const response = await fetch('/api/profile', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: userName, image }),
+    const savingPromise = new Promise(async (resolve, reject) => {
+      const response = await fetch('/api/profile', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: userName, image }),
+      })
+      if (response.ok) resolve()
+      else reject()
     })
-    setIsSaving(false)
-    if (response.ok) {
-      setSaved(true)
-    }
+
+    await toast.promise(savingPromise, {
+      loading: 'Saving...',
+      success: 'Profile saved!',
+      error: 'Error',
+    })
   }
 
   const handleFileChange = async (ev) => {
@@ -44,14 +44,24 @@ const ProfilePage = () => {
     if (files?.length === 1) {
       const data = new FormData()
       data.set('file', files[0])
-      setIsUploading(true)
-      const response = await fetch('/api/upload', {
+
+      const uploadPromise = fetch('/api/upload', {
         method: 'POST',
         body: data,
+      }).then((response) => {
+        if (response.ok) {
+          return response.json().then((link) => {
+            setImage(link)
+          })
+        }
+        throw new Error('Something went wrong')
       })
-      const link = await response.json()
-      setImage(link)
-      setIsUploading(false)
+
+      await toast.promise(uploadPromise, {
+        loading: 'Uploading...',
+        success: 'Upload complete',
+        error: 'Upload error',
+      })
     }
   }
 
@@ -67,9 +77,6 @@ const ProfilePage = () => {
     <section className="mt-8">
       <h1 className="text-center text-primary text-4xl mb-4">Profile</h1>
       <div className="max-w-md mx-auto ">
-        {saved && <SuccessBox>Profile saved!</SuccessBox>}
-        {isSaving && <InfoBox>Saving...</InfoBox>}
-        {isUploading && <InfoBox>Uploading...</InfoBox>}
         <div className="flex gap-4 items-center">
           <div>
             <div className="p-2 rounded-lg relative max-w-[120px]">
