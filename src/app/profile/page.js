@@ -8,6 +8,7 @@ const ProfilePage = () => {
   const session = useSession()
 
   const [userName, setUserName] = useState('')
+  const [image, setImage] = useState('')
   const [saved, setSaved] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const { status } = session
@@ -15,8 +16,10 @@ const ProfilePage = () => {
   useEffect(() => {
     if (status === 'authenticated') {
       setUserName(session?.data?.user?.name)
+      setImage(session?.data?.user?.image)
     }
   }, [session, status])
+
   const handleProfileInfoUpdate = async (ev) => {
     ev.preventDefault()
     setSaved(false)
@@ -24,7 +27,7 @@ const ProfilePage = () => {
     const response = await fetch('/api/profile', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: userName }),
+      body: JSON.stringify({ name: userName, image }),
     })
     setIsSaving(false)
     if (response.ok) {
@@ -38,11 +41,12 @@ const ProfilePage = () => {
     if (files?.length === 1) {
       const data = new FormData()
       data.set('file', files[0])
-      await fetch('/api/upload', {
+      const response = await fetch('/api/upload', {
         method: 'POST',
         body: data,
-        // headers: { 'Content-Type': 'multipart/form-data' },
       })
+      const link = await response.json()
+      setImage(link)
     }
   }
 
@@ -53,8 +57,6 @@ const ProfilePage = () => {
   if (status === 'unauthenticated') {
     return redirect('/login')
   }
-
-  const userImage = session.data.user.image
 
   return (
     <section className="mt-8">
@@ -72,14 +74,16 @@ const ProfilePage = () => {
         )}
         <div className="flex gap-4 items-center">
           <div>
-            <div className="p-2 rounded-lg relative">
-              <Image
-                className="rounded-lg w-full h-full mb-1"
-                src={userImage}
-                width={250}
-                height={250}
-                alt={'avatar'}
-              />
+            <div className="p-2 rounded-lg relative max-w-[120px]">
+              {image && (
+                <Image
+                  className="rounded-lg w-full h-full mb-1"
+                  src={image}
+                  width={250}
+                  height={250}
+                  alt={'avatar'}
+                />
+              )}
               <label>
                 <input
                   type="file"
