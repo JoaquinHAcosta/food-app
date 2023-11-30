@@ -10,6 +10,11 @@ const ProfilePage = () => {
 
   const [userName, setUserName] = useState('')
   const [image, setImage] = useState('')
+  const [phone, setPhone] = useState('')
+  const [streetAddress, setStreetAddress] = useState('')
+  const [postalCode, setPostalCode] = useState('')
+  const [city, setCity] = useState('')
+  const [country, setCountry] = useState('')
   const { status } = session
 
   useEffect(() => {
@@ -77,7 +82,7 @@ const ProfilePage = () => {
     <section className="mt-8">
       <h1 className="text-center text-primary text-4xl mb-4">Profile</h1>
       <div className="max-w-md mx-auto ">
-        <div className="flex gap-4 items-center">
+        <div className="flex gap-4">
           <div>
             <div className="p-2 rounded-lg relative max-w-[120px]">
               {image && (
@@ -112,7 +117,38 @@ const ProfilePage = () => {
               type="email"
               value={session.data.user.email}
               disabled={true}
-              placeholder="First and last name"
+            />
+            <input
+              type="tel"
+              onChange={(ev) => setUserName(ev.target.value)}
+              placeholder="Phone number"
+              value={phone}
+            />
+            <input
+              type="text"
+              onChange={(ev) => setUserName(ev.target.value)}
+              placeholder="Street address"
+              value={streetAddress}
+            />
+            <div className="flex gap-4">
+              <input
+                type="text"
+                onChange={(ev) => setUserName(ev.target.value)}
+                placeholder="City"
+                value={city}
+              />
+              <input
+                type="text"
+                onChange={(ev) => setUserName(ev.target.value)}
+                placeholder="Postal code"
+                value={postalCode}
+              />
+            </div>
+            <input
+              type="text"
+              onChange={(ev) => setUserName(ev.target.value)}
+              placeholder="Country"
+              value={country}
             />
             <button type="submit">Save</button>
           </form>
