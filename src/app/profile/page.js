@@ -32,6 +32,20 @@ const ProfilePage = () => {
     }
   }
 
+  const handleFileChange = async (ev) => {
+    const files = ev.target.files
+
+    if (files?.length === 1) {
+      const data = new FormData()
+      data.set('file', files[0])
+      await fetch('/api/upload', {
+        method: 'POST',
+        body: data,
+        // headers: { 'Content-Type': 'multipart/form-data' },
+      })
+    }
+  }
+
   if (status === 'loading') {
     return 'Loading...'
   }
@@ -66,7 +80,16 @@ const ProfilePage = () => {
                 height={250}
                 alt={'avatar'}
               />
-              <button type="button">Edit</button>
+              <label>
+                <input
+                  type="file"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+                <span className="block border border-gray-300 rounded-lg p-2 text-center cursor-pointer">
+                  Edit
+                </span>
+              </label>
             </div>
           </div>
           <form className="grow" onSubmit={handleProfileInfoUpdate}>
