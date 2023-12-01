@@ -21,6 +21,15 @@ const ProfilePage = () => {
     if (status === 'authenticated') {
       setUserName(session?.data?.user?.name)
       setImage(session?.data?.user?.image)
+      fetch('/api/profile').then((response) => {
+        response.json().then((data) => {
+          setPhone(data.phone)
+          setStreetAddress(data.streetAddress)
+          setPostalCode(data.postalCode)
+          setCity(data.city)
+          setCountry(data.country)
+        })
+      })
     }
   }, [session, status])
 
@@ -115,43 +124,55 @@ const ProfilePage = () => {
             </div>
           </div>
           <form className="grow" onSubmit={handleProfileInfoUpdate}>
+            <label>First and last name</label>
             <input
               type="text"
               value={userName}
               onChange={(ev) => setUserName(ev.target.value)}
               placeholder="First and last name"
             />
+            <label>Email</label>
             <input
+              placeholder={'Email'}
               type="email"
               value={session.data.user.email}
               disabled={true}
             />
+            <label>Phone</label>
             <input
               type="tel"
               onChange={(ev) => setPhone(ev.target.value)}
               placeholder="Phone number"
               value={phone}
             />
+            <label>Street Address</label>
             <input
               type="text"
               onChange={(ev) => setStreetAddress(ev.target.value)}
               placeholder="Street address"
               value={streetAddress}
             />
-            <div className="flex gap-4">
-              <input
-                type="text"
-                onChange={(ev) => setCity(ev.target.value)}
-                placeholder="City"
-                value={city}
-              />
-              <input
-                type="text"
-                onChange={(ev) => setPostalCode(ev.target.value)}
-                placeholder="Postal code"
-                value={postalCode}
-              />
+            <div className="flex gap-2">
+              <div>
+                <label>City</label>
+                <input
+                  type="text"
+                  onChange={(ev) => setCity(ev.target.value)}
+                  placeholder="City"
+                  value={city}
+                />
+              </div>
+              <div>
+                <label>Postal Code</label>
+                <input
+                  type="text"
+                  onChange={(ev) => setPostalCode(ev.target.value)}
+                  placeholder="Postal code"
+                  value={postalCode}
+                />
+              </div>
             </div>
+            <label>Country</label>
             <input
               type="text"
               onChange={(ev) => setCountry(ev.target.value)}
