@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react'
 import { redirect } from 'next/navigation'
 import Image from 'next/image'
 import toast from 'react-hot-toast'
+import Link from 'next/link'
 
 const ProfilePage = () => {
   const session = useSession()
@@ -15,6 +16,7 @@ const ProfilePage = () => {
   const [postalCode, setPostalCode] = useState('')
   const [city, setCity] = useState('')
   const [country, setCountry] = useState('')
+  const [isAdmin, setIsAdmin] = useState('')
   const { status } = session
 
   useEffect(() => {
@@ -28,6 +30,7 @@ const ProfilePage = () => {
           setPostalCode(data.postalCode)
           setCity(data.city)
           setCountry(data.country)
+          setIsAdmin(data.admin)
         })
       })
     }
@@ -97,7 +100,19 @@ const ProfilePage = () => {
 
   return (
     <section className="mt-8">
-      <h1 className="text-center text-primary text-4xl mb-4">Profile</h1>
+      <div className="flex mx-auto gap-2 tabs justify-center">
+        <Link className={'active'} href={'/profile'}>
+          Profile
+        </Link>
+        {isAdmin && (
+          <>
+            <Link href={'/categories'}>Categories</Link>
+            <Link href={'/menu-items'}>Menu Items</Link>
+            <Link href={'/users'}>Users</Link>
+          </>
+        )}
+      </div>
+      <h1 className="text-center text-primary text-4xl mb-4"></h1>
       <div className="max-w-md mx-auto ">
         <div className="flex gap-4">
           <div>
