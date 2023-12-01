@@ -7,7 +7,7 @@ import toast from 'react-hot-toast'
 
 const ProfilePage = () => {
   const session = useSession()
-
+  console.log(session)
   const [userName, setUserName] = useState('')
   const [image, setImage] = useState('')
   const [phone, setPhone] = useState('')
@@ -30,7 +30,15 @@ const ProfilePage = () => {
       const response = await fetch('/api/profile', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: userName, image }),
+        body: JSON.stringify({
+          name: userName,
+          image,
+          streetAddress,
+          phone,
+          postalCode,
+          city,
+          country,
+        }),
       })
       if (response.ok) resolve()
       else reject()
@@ -120,33 +128,33 @@ const ProfilePage = () => {
             />
             <input
               type="tel"
-              onChange={(ev) => setUserName(ev.target.value)}
+              onChange={(ev) => setPhone(ev.target.value)}
               placeholder="Phone number"
               value={phone}
             />
             <input
               type="text"
-              onChange={(ev) => setUserName(ev.target.value)}
+              onChange={(ev) => setStreetAddress(ev.target.value)}
               placeholder="Street address"
               value={streetAddress}
             />
             <div className="flex gap-4">
               <input
                 type="text"
-                onChange={(ev) => setUserName(ev.target.value)}
+                onChange={(ev) => setCity(ev.target.value)}
                 placeholder="City"
                 value={city}
               />
               <input
                 type="text"
-                onChange={(ev) => setUserName(ev.target.value)}
+                onChange={(ev) => setPostalCode(ev.target.value)}
                 placeholder="Postal code"
                 value={postalCode}
               />
             </div>
             <input
               type="text"
-              onChange={(ev) => setUserName(ev.target.value)}
+              onChange={(ev) => setCountry(ev.target.value)}
               placeholder="Country"
               value={country}
             />
