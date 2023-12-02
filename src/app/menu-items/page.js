@@ -40,7 +40,7 @@ const MenuItemsPage = () => {
           {menuItems.length > 0 &&
             menuItems.map((item, index) => (
               <Link
-                href={'/menu-items/edit' + item._id}
+                href={'/menu-items/edit/' + item._id}
                 className="bg-gray-300 rounded-lg p-4"
                 key={index}
               >
