@@ -99,7 +99,7 @@ const CategoriesPage = () => {
                 setCategoryName(c.name)
               }}
               key={i}
-              className=" rounded-xl p-2 px-4 flex gap-1 cursor-pointer mb-1"
+              className="button rounded-xl p-2 px-4 flex gap-1 cursor-pointer mb-1"
             >
               <span>{c.name}</span>
             </button>
