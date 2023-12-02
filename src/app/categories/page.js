@@ -1,19 +1,15 @@
 'use client'
 import UserTabs from '@/components/layout/UserTabs'
-import React, { useEffect, useState } from 'react'
+import { useProfile } from '@/components/UseProfile'
 
 const CategoriesPage = () => {
-  const [isAdmin, setIsAdmin] = useState(false)
-  useEffect(() => {
-    fetch('/api/profile').then((response) => {
-      response.json().then((data) => {
-        setIsAdmin(data.admin)
-      })
-    })
-  }, [])
+  const { loading: profileLoading, data: profileData } = useProfile()
+  if (profileLoading) {
+    return 'Loading user info...'
+  }
 
-  if (!isAdmin) {
-    return 'Not and admin'
+  if (!profileData.admin) {
+    return 'Not an admin'
   }
 
   return (
