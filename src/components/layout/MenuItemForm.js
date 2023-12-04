@@ -23,6 +23,11 @@ const MenuItemForm = ({ onSubmit, menuItem }) => {
     })
   }
 
+  const removeSize = (indexToRemove) => {
+    console.log('queso')
+    setSizes((prev) => prev.filter((v, index) => index !== indexToRemove))
+  }
+
   return (
     <form
       className="mt-8 max-w-md mx-auto"
@@ -57,15 +62,15 @@ const MenuItemForm = ({ onSubmit, menuItem }) => {
           <div className="bg-gray-200 p-2 rounded-md mb-2">
             <label>Sizes</label>
             {sizes?.length > 0 &&
-              sizes.map((size, i) => (
-                <div className="flex gap-2" key={i}>
+              sizes.map((size, index) => (
+                <div className="flex items-end gap-2" key={index}>
                   <div>
                     <label>Size name</label>
                     <input
                       type="text"
                       placeholder="Size name"
                       value={size.name}
-                      onChange={(ev) => editSize(ev, i, 'name')}
+                      onChange={(ev) => editSize(ev, index, 'name')}
                     />
                   </div>
                   <div>
@@ -74,8 +79,17 @@ const MenuItemForm = ({ onSubmit, menuItem }) => {
                       type="text"
                       placeholder="Extra price"
                       value={size.value}
-                      onChange={(ev) => editSize(ev, i, 'price')}
+                      onChange={(ev) => editSize(ev, index, 'price')}
                     />
+                  </div>
+                  <div>
+                    <button
+                      onClick={() => removeSize(index)}
+                      type="button"
+                      className="bg-white mb-2"
+                    >
+                      x
+                    </button>
                   </div>
                 </div>
               ))}
