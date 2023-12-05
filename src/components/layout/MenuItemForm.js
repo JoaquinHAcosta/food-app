@@ -1,6 +1,7 @@
 import EditableImage from '@/components/layout/EditableImage'
 import Trash from '@/components/icons/trash'
 import { useState } from 'react'
+import Plus from '../icons/plus'
 
 const MenuItemForm = ({ onSubmit, menuItem }) => {
   const [image, setImage] = useState(menuItem?.image || '')
@@ -86,14 +87,19 @@ const MenuItemForm = ({ onSubmit, menuItem }) => {
                     <button
                       onClick={() => removeSize(index)}
                       type="button"
-                      className="bg-white mb-2"
+                      className="bg-white mb-2 px-2"
                     >
                       <Trash />
                     </button>
                   </div>
                 </div>
               ))}
-            <button onClick={addSize} type="button" className="bg-white">
+            <button
+              onClick={addSize}
+              type="button"
+              className="bg-white items-center"
+            >
+              <Plus className="w-4 h-4" />
               Add item size
             </button>
           </div>
