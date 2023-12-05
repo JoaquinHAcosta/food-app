@@ -1,4 +1,5 @@
 import EditableImage from '@/components/layout/EditableImage'
+import Trash from '@/components/icons/trash'
 import { useState } from 'react'
 
 const MenuItemForm = ({ onSubmit, menuItem }) => {
@@ -24,7 +25,6 @@ const MenuItemForm = ({ onSubmit, menuItem }) => {
   }
 
   const removeSize = (indexToRemove) => {
-    console.log('queso')
     setSizes((prev) => prev.filter((v, index) => index !== indexToRemove))
   }
 
@@ -88,7 +88,7 @@ const MenuItemForm = ({ onSubmit, menuItem }) => {
                       type="button"
                       className="bg-white mb-2"
                     >
-                      x
+                      <Trash />
                     </button>
                   </div>
                 </div>
