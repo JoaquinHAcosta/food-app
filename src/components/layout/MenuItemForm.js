@@ -8,13 +8,24 @@ const MenuItemForm = ({ onSubmit, menuItem }) => {
   const [name, setName] = useState(menuItem?.name || '')
   const [description, setDescription] = useState(menuItem?.description || '')
   const [basePrice, setBasePrice] = useState(menuItem?.basePrice || '')
-  const [sizes, setSizes] = useState([])
-  const [extraIngredientPrices, setExtraIngredientPrices] = useState([])
+  const [sizes, setSizes] = useState(menuItem?.sizes || [])
+  const [extraIngredientPrices, setExtraIngredientPrices] = useState(
+    menuItem?.extraIngredientPrices || []
+  )
 
   return (
     <form
       className="mt-8 max-w-md mx-auto"
-      onSubmit={(ev) => onSubmit(ev, { image, name, description, basePrice })}
+      onSubmit={(ev) =>
+        onSubmit(ev, {
+          image,
+          name,
+          description,
+          basePrice,
+          sizes,
+          extraIngredientPrices,
+        })
+      }
     >
       <div
         className="grid items-start gap-4"
