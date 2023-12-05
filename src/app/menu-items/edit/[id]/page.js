@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useProfile } from '@/components/UseProfile'
 import UserTabs from '@/components/layout/UserTabs'
 import MenuItemForm from '@/components/layout/MenuItemForm'
+import DeleteButton from '@/components/menu/DeleteButton'
 
 import toast from 'react-hot-toast'
 import Link from 'next/link'
@@ -94,9 +95,12 @@ const EditMenuPage = () => {
         </Link>
       </div>
       <MenuItemForm menuItem={menuItem} onSubmit={handleFormSubmit} />
-      <div className="max-w-md mx-auto mt-4">
+      <div className="max-w-md mx-auto mt-2">
         <div className="max-w-xs ml-auto pl-4">
-          <button onClick={handleDeleteClick}>Delete this menu item</button>
+          <DeleteButton
+            label={'Delete this menu item'}
+            onDelete={handleDeleteClick}
+          />
         </div>
       </div>
     </section>

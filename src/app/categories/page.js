@@ -1,5 +1,6 @@
 'use client'
 import UserTabs from '@/components/layout/UserTabs'
+import DeleteButton from '@/components/menu/DeleteButton'
 import { useProfile } from '@/components/UseProfile'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -137,9 +138,10 @@ const CategoriesPage = () => {
                 >
                   Edit
                 </button>
-                <button type="button" onClick={() => handleDeleteClick(c._id)}>
-                  Delete
-                </button>
+                <DeleteButton
+                  label={'Delete'}
+                  onDelete={() => handleDeleteClick(c._id)}
+                />
               </div>
             </div>
           ))}
