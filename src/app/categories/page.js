@@ -84,7 +84,7 @@ const CategoriesPage = () => {
   }
 
   return (
-    <section className="mt-8 max-w-md mx-auto">
+    <section className="mt-8 max-w-lg mx-auto">
       <UserTabs isAdmin={true} />
       <form className="mt-8" onSubmit={handleCategorySubmit}>
         <div className="flex gap-2 items-end">
