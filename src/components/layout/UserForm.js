@@ -2,6 +2,7 @@
 
 import EditableImage from '@/components/layout/EditableImage'
 import { useState } from 'react'
+import { useProfile } from '@/components/UseProfile'
 
 const UserForm = ({ user, onSave }) => {
   const [userName, setUserName] = useState(user?.name || '')
@@ -11,6 +12,9 @@ const UserForm = ({ user, onSave }) => {
   const [postalCode, setPostalCode] = useState(user?.postalCode || '')
   const [city, setCity] = useState(user?.city || '')
   const [country, setCountry] = useState(user?.country || '')
+  const [admin, setAdmin] = useState(user?.admin || false)
+
+  const { data: loggedInUserData } = useProfile()
 
   return (
     <div className="flex gap-4">
@@ -61,7 +65,7 @@ const UserForm = ({ user, onSave }) => {
           placeholder="Street address"
           value={streetAddress}
         />
-        <div className="flex gap-2">
+        <div className="grid grid-cols-2 gap-2">
           <div>
             <label>City</label>
             <input
@@ -88,6 +92,24 @@ const UserForm = ({ user, onSave }) => {
           placeholder="Country"
           value={country}
         />
+        {loggedInUserData.admin && (
+          <div>
+            <label
+              className="p-2 inline-flex items-center gap-2 block mb-2"
+              htmlFor="adminCb"
+            >
+              <input
+                id="adminCb"
+                type="checkbox"
+                className=""
+                value={'1'}
+                checked={admin}
+                onClick={(ev) => setAdmin(ev.target.checked)}
+              />
+              <span>Admin</span>
+            </label>
+          </div>
+        )}
         <button type="submit">Save</button>
       </form>
     </div>
