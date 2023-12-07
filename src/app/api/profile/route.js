@@ -18,9 +18,11 @@ export async function PUT(req) {
     const email = session.user.email
     filter = { email }
   }
-
+  const user = await User.findOne(filter)
   await User.updateOne(filter, { name, image })
-  await UserInfo.findOneAndUpdate(filter, otherUserInfo, { upsert: true })
+  await UserInfo.findOneAndUpdate({ email: user.email }, otherUserInfo, {
+    upsert: true,
+  })
 
   return Response.json(true)
 }
