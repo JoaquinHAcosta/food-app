@@ -20,7 +20,7 @@ const EditUserPage = () => {
     })
   }, [])
 
-  const handleSaveButtonClick = (ev, data) => {
+  const handleSaveButtonClick = async (ev, data) => {
     ev.preventDefault()
 
     const promise = new Promise(async (resolve, reject) => {
@@ -36,7 +36,7 @@ const EditUserPage = () => {
       }
     })
 
-    toast.promise(promise, {
+    await toast.promise(promise, {
       loading: 'Saving user...',
       success: 'User saved',
       error: 'Something went wrong',
