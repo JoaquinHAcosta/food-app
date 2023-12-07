@@ -4,7 +4,7 @@ import EditableImage from '@/components/layout/EditableImage'
 import { useState } from 'react'
 
 const UserForm = ({ user, onSave }) => {
-  const [userName, setUserName] = useState(user?.userName || '')
+  const [userName, setUserName] = useState(user?.name || '')
   const [image, setImage] = useState(user?.image || '')
   const [phone, setPhone] = useState(user?.phone || '')
   const [streetAddress, setStreetAddress] = useState(user?.streetAddress || '')
