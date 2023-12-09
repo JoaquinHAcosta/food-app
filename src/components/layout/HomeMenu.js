@@ -14,7 +14,10 @@ const HomeMenu = () => {
         </div>
       </div>
       <div className="text-center mb-4">
-        <SectionHeaders subHeader={'check out'} mainHeader={'Menu'} />
+        <SectionHeaders
+          subHeader={'check out'}
+          mainHeader={'Our Best Sellers'}
+        />
       </div>
       <div className="grid grid-cols-3 gap-4">
         <MenuItem />
