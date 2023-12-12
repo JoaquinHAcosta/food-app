@@ -54,7 +54,7 @@ const EditUserPage = () => {
   return (
     <section className="mt-8 mx-auto max-w-2xl">
       <UserTabs isAdmin={true} />
-      <div className="mt-8">
+      <div className="mt-8 p-2">
         <UserForm user={user} onSave={handleSaveButtonClick} />
       </div>
     </section>
