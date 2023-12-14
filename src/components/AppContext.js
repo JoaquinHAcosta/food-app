@@ -5,13 +5,13 @@ import { createContext, useEffect, useState } from 'react'
 export const CartContext = createContext({})
 
 export function AppProvider({ children }) {
-  const [cartProducts, setCarProducts] = useState([])
+  const [cartProducts, setCartProducts] = useState([])
 
   const ls = typeof window !== 'undefined' ? window.localStorage : null
 
   useEffect(() => {
     if (ls && ls.getItem('cart')) {
-      setCarProducts(JSON.parse(ls.getItem('cart')))
+      setCartProducts(JSON.parse(ls.getItem('cart')))
     }
   }, [])
 
@@ -22,7 +22,7 @@ export function AppProvider({ children }) {
   }
 
   const addToCart = (product, size = null, extras = []) => {
-    setCarProducts((prevProducts) => {
+    setCartProducts((prevProducts) => {
       const cartProduct = { ...product, size, extras }
       const newProducts = [...prevProducts, cartProduct]
       saveCartProductsToLocalStorage(newProducts)
@@ -31,8 +31,18 @@ export function AppProvider({ children }) {
   }
 
   const cleanCart = () => {
-    setCarProducts([])
+    setCartProducts([])
     saveCartProductsToLocalStorage([])
+  }
+
+  const removeCartProduct = (indexToRemove) => {
+    setCartProducts((prevCartProducst) => {
+      const newCartProducts = prevCartProducst.filter(
+        (v, index) => index !== indexToRemove
+      )
+      saveCartProductsToLocalStorage(newCartProducts)
+      return newCartProducts
+    })
   }
 
   return (
@@ -40,8 +50,10 @@ export function AppProvider({ children }) {
       <CartContext.Provider
         value={{
           cartProducts,
-          setCarProducts,
+          setCartProducts,
           addToCart,
+          removeCartProduct,
+          cleanCart,
         }}
       >
         {children}
