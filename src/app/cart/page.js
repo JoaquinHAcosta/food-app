@@ -69,7 +69,14 @@ const CartPage = () => {
             <span className="text-lg font-semibold pl-2">${total}</span>
           </div>
         </div>
-        <div>right</div>
+        <div className="bg-gray-100 p-4 rounded-lg">
+          <h2>Checkout</h2>
+          <form>
+            <label>Address</label>
+            <input type="text" placeholder="Street address" />
+            <button type="submit">Pay ${total}</button>
+          </form>
+        </div>
       </div>
     </section>
   )

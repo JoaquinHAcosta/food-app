@@ -1,6 +1,7 @@
 'use client'
 
 import EditableImage from '@/components/layout/EditableImage'
+import AddressInputs from '@/components/layout/AddressInputs'
 import { useState } from 'react'
 import { useProfile } from '@/components/UseProfile'
 
@@ -16,6 +17,13 @@ const UserForm = ({ user, onSave }) => {
 
   const { data: loggedInUserData } = useProfile()
 
+  const handleAddressChange = (propName, value) => {
+    if (propName === 'phone') setPhone(value)
+    if (propName === 'streetAddress') setStreetAddress(value)
+    if (propName === 'postalCode') setPostalCode(value)
+    if (propName === 'city') setCity(value)
+    if (propName === 'country') setCountry(value)
+  }
   return (
     <div className="flex gap-4">
       <div>
@@ -52,46 +60,15 @@ const UserForm = ({ user, onSave }) => {
           value={user.email}
           disabled={true}
         />
-        <label>Phone</label>
-        <input
-          type="tel"
-          onChange={(ev) => setPhone(ev.target.value)}
-          placeholder="Phone number"
-          value={phone}
-        />
-        <label>Street Address</label>
-        <input
-          type="text"
-          onChange={(ev) => setStreetAddress(ev.target.value)}
-          placeholder="Street address"
-          value={streetAddress}
-        />
-        <div className="grid grid-cols-2 gap-2">
-          <div>
-            <label>City</label>
-            <input
-              type="text"
-              onChange={(ev) => setCity(ev.target.value)}
-              placeholder="City"
-              value={city}
-            />
-          </div>
-          <div>
-            <label>Postal Code</label>
-            <input
-              type="text"
-              onChange={(ev) => setPostalCode(ev.target.value)}
-              placeholder="Postal code"
-              value={postalCode}
-            />
-          </div>
-        </div>
-        <label>Country</label>
-        <input
-          type="text"
-          onChange={(ev) => setCountry(ev.target.value)}
-          placeholder="Country"
-          value={country}
+        <AddressInputs
+          addressProps={{
+            streetAddress,
+            phone,
+            postalCode,
+            city,
+            country,
+          }}
+          setAddressProps={handleAddressChange}
         />
         {loggedInUserData.admin && (
           <div>
