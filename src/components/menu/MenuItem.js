@@ -13,12 +13,17 @@ const MenuItem = (menuItem) => {
   const { addToCart } = useContext(CartContext)
 
   const handleAddToCartButtonClick = () => {
-    if ((sizes.length === 0) & (extraIngredientPrices.length === 0)) {
-      addToCart(menuItem)
-      toast.success('Added to cart!')
-    } else {
+    const hasOptions = (sizes.length > 0) & (extraIngredientPrices.length > 0)
+
+    if (hasOptions && !showPopUp) {
       setShowPopUp(true)
+      return
     }
+
+    addToCart(menuItem, selectedSize, selectedExtras)
+
+    setShowPopUp(false)
+    toast.success('Added to cart!')
   }
 
   const handleExtraThingClick = (ev, extraThing) => {
@@ -46,11 +51,17 @@ const MenuItem = (menuItem) => {
   return (
     <>
       {showPopUp && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center">
-          <div className="my-8 bg-white p-2 rounded-lg max-w-md ">
+        <div
+          onClick={() => setShowPopUp(false)}
+          className="fixed inset-0 bg-black/80 flex items-center justify-center"
+        >
+          <div
+            onClick={(ev) => ev.stopPropagation()}
+            className="my-8 bg-white p-2 rounded-lg max-w-md "
+          >
             <div
               className="overflow-y-scroll p-2"
-              style={{ maxHeight: 'calc(100vh) - 100px' }}
+              style={{ maxHeight: 'calc(100vh - 100px)' }}
             >
               <Image
                 src={image}
@@ -103,8 +114,15 @@ const MenuItem = (menuItem) => {
                   ))}
                 </div>
               )}
-              <button className="primary sticky bottom-2" type="button">
+              <button
+                onClick={handleAddToCartButtonClick}
+                className="primary sticky bottom-2"
+                type="button"
+              >
                 Add to cart ${selectedPrice}
+              </button>
+              <button className="mt-2" onClick={() => setShowPopUp(false)}>
+                Cancel
               </button>
             </div>
           </div>
