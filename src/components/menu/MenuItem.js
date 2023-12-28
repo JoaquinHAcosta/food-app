@@ -13,7 +13,7 @@ const MenuItem = (menuItem) => {
   const { addToCart } = useContext(CartContext)
 
   const handleAddToCartButtonClick = () => {
-    const hasOptions = (sizes.length > 0) & (extraIngredientPrices.length > 0)
+    const hasOptions = (sizes.length > 0) | (extraIngredientPrices.length > 0)
 
     if (hasOptions && !showPopUp) {
       setShowPopUp(true)

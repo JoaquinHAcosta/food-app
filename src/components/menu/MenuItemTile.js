@@ -1,7 +1,8 @@
 import React from 'react'
 
 const MenuItemTile = ({ onAddToCart, ...item }) => {
-  const { image, name, description, basePrice } = item
+  const { image, name, description, basePrice, sizes, extraIngredientPrices } =
+    item
   return (
     <div className="bg-gray-200 p-4 rounded-lg text-center hover:bg-white hover:shadow-md hover:shadow-black/25 transition-all">
       <div className="text-center">
@@ -17,7 +18,11 @@ const MenuItemTile = ({ onAddToCart, ...item }) => {
         onClick={onAddToCart}
         className=" mt-4 bg-primary text-white rounded-full px-8 py-2"
       >
-        Add to cart ${basePrice}
+        {sizes?.length > 0 || extraIngredientPrices?.length > 0 ? (
+          <span>Add to cart (from ${basePrice})</span>
+        ) : (
+          <span>Add to cart ${basePrice}</span>
+        )}
       </button>
     </div>
   )
