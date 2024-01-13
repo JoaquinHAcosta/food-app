@@ -28,9 +28,9 @@ const CartPage = () => {
     }
   }, [profileData])
 
-  let total = 0
+  let subTotal = 0
   for (const p of cartProducts) {
-    total += cartProductPrice(p)
+    subTotal += cartProductPrice(p)
   }
 
   const handleAddressChange = (propName, value) => {
@@ -90,7 +90,7 @@ const CartPage = () => {
             ))}
           <div className="py-2 text-right pr-16">
             <span className="text-gray-500">Subtotal:</span>
-            <span className="text-lg font-semibold pl-2">${total}</span>
+            <span className="text-lg font-semibold pl-2">${subTotal}</span>
           </div>
         </div>
         <div className="bg-gray-100 p-4 rounded-lg">
@@ -100,7 +100,7 @@ const CartPage = () => {
               addressProps={address}
               setAddressProps={handleAddressChange}
             />
-            <button type="submit">Pay ${total}</button>
+            <button type="submit">Pay ${subTotal}</button>
           </form>
         </div>
       </div>
