@@ -37,10 +37,19 @@ const CartPage = () => {
     setAddress((prevAddress) => ({ ...prevAddress, [propName]: value }))
   }
 
-  const proceedToCheckout = (ev) => {
+  const proceedToCheckout = async (ev) => {
     ev.preventDefault()
     // address and shopping cart products
-    // redirect to stripe
+    const response = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        address,
+        cartProducts,
+      }),
+    })
+    const link = await response.json()
+    window.location = link
   }
 
   return (
