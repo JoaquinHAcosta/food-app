@@ -37,6 +37,12 @@ const CartPage = () => {
     setAddress((prevAddress) => ({ ...prevAddress, [propName]: value }))
   }
 
+  const proceedToCheckout = (ev) => {
+    ev.preventDefault()
+    // address and shopping cart products
+    // redirect to stripe
+  }
+
   return (
     <section className="mt-8">
       <div className="text-center">
@@ -88,19 +94,28 @@ const CartPage = () => {
                 </div>
               </div>
             ))}
-          <div className="py-2 text-right pr-16">
-            <span className="text-gray-500">Subtotal:</span>
-            <span className="text-lg font-semibold pl-2">${subTotal}</span>
+          <div className="py-2 pr-16 flex justify-end items-center">
+            <div className="text-gray-500">
+              Subtotal: <br />
+              Delivery: <br />
+              Total:
+            </div>
+            <div className="text-lg font-semibold pl-2 text-right">
+              ${subTotal}
+              <br />
+              $5
+              <br />${subTotal + 5}
+            </div>
           </div>
         </div>
         <div className="bg-gray-100 p-4 rounded-lg">
           <h2>Checkout</h2>
-          <form>
+          <form onSubmit={proceedToCheckout}>
             <AddressInputs
               addressProps={address}
               setAddressProps={handleAddressChange}
             />
-            <button type="submit">Pay ${subTotal}</button>
+            <button type="submit">Pay ${subTotal + 5}</button>
           </form>
         </div>
       </div>
