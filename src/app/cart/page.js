@@ -50,6 +50,7 @@ const CartPage = () => {
     })
     const link = await response.json()
     window.location = link
+    console.log({ cartProducts })
   }
 
   return (
