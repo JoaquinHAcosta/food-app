@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-import MenuItem from '../../../models/MenuItem'
-import Order from '../../../models/Order'
+import { MenuItem } from '@/models/MenuItem'
+import { Order } from '@/models/Order'
 import { getServerSession } from 'next-auth'
 const stripe = require('stripe')(process.env.STRIPE_SK)
 
@@ -31,6 +31,7 @@ export async function POST(req) {
     }
     if (cartProduct.extras?.length > 0) {
       for (const cartProductExtraThing of cartProduct.extras) {
+        // console.log({ cartProductExtraThing })
         const extraThingInfo = productInfo.extraIngredientPrices.find(
           (extra) => extra._id.toString() === extraThingInfo._id.toString()
         )
