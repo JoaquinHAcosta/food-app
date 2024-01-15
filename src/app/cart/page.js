@@ -7,6 +7,7 @@ import AddressInputs from '@/components/layout/AddressInputs'
 import SectionHeaders from '@/components/layout/SectionHeaders'
 import Image from 'next/image'
 import { useContext, useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 const CartPage = () => {
   const { cartProducts, removeCartProduct } = useContext(CartContext)
@@ -40,16 +41,31 @@ const CartPage = () => {
   const proceedToCheckout = async (ev) => {
     ev.preventDefault()
     // address and shopping cart products
-    const response = await fetch('/api/checkout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        address,
-        cartProducts,
-      }),
+
+    const promise = new Promise((resolve, reject) => {
+      fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          address,
+          cartProducts,
+        }),
+      }).then(async (response) => {
+        if (response.ok) {
+          resolve()
+          const link = await response.json()
+          window.location = link
+        } else {
+          reject()
+        }
+      })
     })
-    // const link = await response.json()
-    // window.location = link
+
+    toast.promise(promise, {
+      loading: 'Preparing your order...',
+      success: 'Redirecting to payment',
+      error: 'Somehing went wrong... Pleaste try again later.',
+    })
   }
 
   return (
