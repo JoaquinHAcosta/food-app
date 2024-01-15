@@ -31,9 +31,10 @@ export async function POST(req) {
     }
     if (cartProduct.extras?.length > 0) {
       for (const cartProductExtraThing of cartProduct.extras) {
-        // console.log({ cartProductExtraThing })
-        const extraThingInfo = productInfo.extraIngredientPrices.find(
-          (extra) => extra._id.toString() === extraThingInfo._id.toString()
+        const productsExtras = productInfo.extraIngredientPrices
+        const extraThingInfo = productsExtras.find(
+          (extra) =>
+            extra._id.toString() === cartProductExtraThing._id.toString()
         )
         productPrice += extraThingInfo.price
       }
@@ -53,25 +54,23 @@ export async function POST(req) {
     })
   }
 
-  console.log({ stripeLineItems })
+  const stripeSession = await stripe.checkout.sessions.create({
+    line_items: stripeLineItems,
+    mode: 'payment',
+    customer_email: userEmail,
+    success_url: process.env.NEXTAUTH_URL + 'cart?success=1',
+    cancel_url: process.env.NEXTAUTH_URL + 'cart?canceled=1',
+    metadata: { orderId: orderDoc._id },
+    shipping_options: [
+      {
+        shipping_rate_data: {
+          display_name: 'Delivery fee',
+          type: 'fixed_amount',
+          fixed_amount: { amount: 500, currency: 'USD' },
+        },
+      },
+    ],
+  })
 
-  return Response.json(null)
-
-  // const stripeSession = await stripe.checkout.sessions.create({
-  //   line_items: stripeLineItems,
-  //   mode: 'payment',
-  //   customer_email: userEmail,
-  //   success_url: process.env.NEXTAUTH_URL + 'cart?success=1',
-  //   cancel_url: process.env.NEXTAUTH_URL + 'cart?canceled=1',
-  //   metadata: { orderId: orderDoc._id },
-  //   shipping_options: [
-  //     {
-  //       shipping_rate_data: {
-  //         display_name: 'Delivery fee',
-  //         type: 'fixed_amount',
-  //         fixed_amount: { amount: 500, currency: 'USD' },
-  //       },
-  //     },
-  //   ],
-  // })
+  return Response.json(stripeSession.url)
 }
