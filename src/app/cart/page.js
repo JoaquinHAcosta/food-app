@@ -48,7 +48,7 @@ const CartPage = () => {
         cartProducts,
       }),
     })
-    const link = await response.json()
+    // const link = await response.json()
     // window.location = link
   }
 
