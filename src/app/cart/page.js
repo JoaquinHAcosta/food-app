@@ -49,10 +49,9 @@ const CartPage = () => {
       }),
     })
     const link = await response.json()
-    window.location = link
+    // window.location = link
   }
 
-  console.log({ cartProducts })
   return (
     <section className="mt-8">
       <div className="text-center">
@@ -110,7 +109,7 @@ const CartPage = () => {
               Delivery: <br />
               Total:
             </div>
-            <div className="text-lg font-semibold pl-2 text-right">
+            <div className="font-semibold pl-2 text-right">
               ${subTotal}
               <br />
               $5
