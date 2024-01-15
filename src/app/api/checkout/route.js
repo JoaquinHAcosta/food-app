@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import MenuItem from '../../../models/MenuItem'
 import { getServerSession } from 'next-auth'
 const stripe = require('stripe')(process.env.STRIPE_SK)
 
@@ -17,9 +18,24 @@ export async function POST(req) {
   })
 
   const stripeLineItems = []
-  for (const product of cartProducts) {
-    const productName = product.name
-    let productPrice = 0
+  for (const cartProduct of cartProducts) {
+    const productName = cartProduct.name
+    const productInfo = await MenuItem.findById(cartProduct._id)
+    let productPrice = productInfo.basePrice
+    if (cartProduct.size) {
+      const size = productInfo.sizes.find(
+        (size) => size._id === cartProduct.size._id
+      )
+      productPrice += size.price
+    }
+    if (cartProduct.extras?.length > 0) {
+      for (const cartProductExtraThing of cartProduct.extras) {
+        const extraThingInfo = productInfo.extraIngredientPrices.find(
+          (extra) => extra._id === extraThingInfo._id
+        )
+        productPrice += extraThingInfo.price
+      }
+    }
 
     stripeLineItems.push({
       quantity: 1,

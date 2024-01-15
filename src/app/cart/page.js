@@ -50,9 +50,9 @@ const CartPage = () => {
     })
     const link = await response.json()
     window.location = link
-    console.log({ cartProducts })
   }
 
+  console.log({ cartProducts })
   return (
     <section className="mt-8">
       <div className="text-center">
