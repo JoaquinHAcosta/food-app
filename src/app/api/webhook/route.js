@@ -13,7 +13,6 @@ export async function POST(req) {
     console.error('stripe error')
     return Response.json(e, { status: 400 })
   }
-  console.log(event)
 
   return Response.json('ok', { status: 200 })
 }
