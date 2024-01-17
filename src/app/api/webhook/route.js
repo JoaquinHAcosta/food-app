@@ -2,7 +2,6 @@ const stripe = require('stripe')(process.env.STRIPE_SK)
 import { Order } from '@/models/Order'
 
 export async function POST(req) {
-  console.log('conchaelmono')
   const sig = req.headers.get('stripe-signature')
   let event
 

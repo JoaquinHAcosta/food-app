@@ -22,6 +22,14 @@ const CartPage = () => {
   const { data: profileData } = useProfile()
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (window.location.url.includes('canceled=1')) {
+        toast.error('Payment failed')
+      }
+    }
+  }, [])
+
+  useEffect(() => {
     if (profileData?.city) {
       const { phone, streetAddress, city, postalCode, country } = profileData
       const addressFromProfile = {
