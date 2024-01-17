@@ -61,6 +61,9 @@ export async function POST(req) {
     success_url: process.env.NEXTAUTH_URL + 'cart?success=1',
     cancel_url: process.env.NEXTAUTH_URL + 'cart?canceled=1',
     metadata: { orderId: orderDoc._id },
+    payment_intent_data: {
+      metadata: { orderId: orderDoc._id },
+    },
     shipping_options: [
       {
         shipping_rate_data: {
