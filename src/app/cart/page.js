@@ -12,7 +12,13 @@ import toast from 'react-hot-toast'
 const CartPage = () => {
   const { cartProducts, removeCartProduct } = useContext(CartContext)
 
-  const [address, setAddress] = useState({})
+  const [address, setAddress] = useState({
+    phone: '',
+    streetAddress: '',
+    city: '',
+    postalCode: '',
+    country: '',
+  })
   const { data: profileData } = useProfile()
 
   useEffect(() => {
