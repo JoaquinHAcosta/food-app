@@ -23,7 +23,7 @@ const CartPage = () => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      if (window.location.url.includes('canceled=1')) {
+      if (window.location.href.includes('canceled=1')) {
         toast.error('Payment failed')
       }
     }
