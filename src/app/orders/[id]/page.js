@@ -2,15 +2,27 @@
 
 import { CartContext } from '@/components/AppContext'
 import SectionHeaders from '@/components/layout/SectionHeaders'
-import { useContext, useEffect } from 'react'
+import { useParams } from 'next/navigation'
+import { useContext, useEffect, useState } from 'react'
 
 const OrderPage = () => {
   const { clearCart } = useContext(CartContext)
+  const [order, setOrder] = useState()
+  const { id } = useParams()
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       if (window.location.href.includes('clear-cart=1')) {
         clearCart()
       }
+    }
+
+    if (id) {
+      fetch('/api/orders?_id' + id).then((res) => {
+        res.json().then((orderData) => {
+          setOrder(orderData)
+        })
+      })
     }
   }, [])
 
