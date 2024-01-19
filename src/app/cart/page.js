@@ -2,10 +2,9 @@
 
 import { CartContext, cartProductPrice } from '@/components/AppContext'
 import { useProfile } from '@/components/UseProfile'
-import Trash from '@/components/icons/trash'
 import AddressInputs from '@/components/layout/AddressInputs'
+import CartProduct from '@/components/menu/CartProduct'
 import SectionHeaders from '@/components/layout/SectionHeaders'
-import Image from 'next/image'
 import { useContext, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -103,44 +102,11 @@ const CartPage = () => {
           )}
           {cartProducts?.length > 0 &&
             cartProducts.map((product, index) => (
-              <div
+              <CartProduct
                 key={index}
-                className="flex items-center gap-4 border-b py-4"
-              >
-                <div className="w-24">
-                  <Image src={product.image} height={240} width={240} alt="" />
-                </div>
-                <div className="grow">
-                  <h3 className="font-semibold">{product.name}</h3>
-                  {product.size && (
-                    <div className="text-sm">
-                      Size:{' '}
-                      <span className="uppercase">{product.size.name}</span>
-                    </div>
-                  )}
-                  {product.extras?.length > 0 && (
-                    <div>
-                      {product.extras.map((extra, i) => (
-                        <div className="text-sm text-gray-500" key={i}>
-                          Extra {extra.name} ${extra.price}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <div className="text-lg font-semibold">
-                  ${cartProductPrice(product)}
-                </div>
-                <div className="ml-2">
-                  <button
-                    type="button"
-                    onClick={() => removeCartProduct(index)}
-                    className="p-2"
-                  >
-                    <Trash />
-                  </button>
-                </div>
-              </div>
+                product={product}
+                onRemove={removeCartProduct}
+              />
             ))}
           <div className="py-2 pr-16 flex justify-end items-center">
             <div className="text-gray-500">
