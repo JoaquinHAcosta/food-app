@@ -26,11 +26,13 @@ const CartProduct = ({ product, onRemove }) => {
         )}
       </div>
       <div className="text-lg font-semibold">${cartProductPrice(product)}</div>
-      <div className="ml-2">
-        <button type="button" onClick={() => onRemove(index)} className="p-2">
-          <Trash />
-        </button>
-      </div>
+      {!!onRemove && (
+        <div className="ml-2">
+          <button type="button" onClick={() => onRemove(index)} className="p-2">
+            <Trash />
+          </button>
+        </div>
+      )}
     </div>
   )
 }
