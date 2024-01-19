@@ -24,8 +24,21 @@ const OrderPage = () => {
       <div className="mt-8">
         {orders?.length > 0 &&
           orders.map((order, index) => (
-            <div key={index} className="bg-gray-200 mb-2 p-4 rounded-lg">
-              {order.createdAt}
+            <div
+              key={index}
+              className="bg-gray-200 mb-2 p-4 rounded-lg grid grid-cols-3"
+            >
+              <div className="text-gray-500">{order.userEmail}</div>
+              <div className="text-center">
+                <span
+                  className={`${
+                    order.paid ? 'bg-green-500' : 'bg-red-400'
+                  } p-2 rounded-md text-white`}
+                >
+                  {order.paid ? 'Paid' : 'Not paid'}
+                </span>
+              </div>
+              <div>{order.createdAt}</div>
             </div>
           ))}
       </div>
