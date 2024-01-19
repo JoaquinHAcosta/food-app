@@ -1,11 +1,12 @@
 import React from 'react'
 
-const AddressInputs = ({ addressProps, setAddressProps }) => {
+const AddressInputs = ({ addressProps, setAddressProps, disabled = false }) => {
   const { phone, streetAddress, postalCode, city, country } = addressProps
   return (
     <>
       <label>Phone</label>
       <input
+        disabled={disabled}
         type="tel"
         onChange={(ev) => setAddressProps('phone', ev.target.value)}
         placeholder="Phone number"
@@ -13,6 +14,7 @@ const AddressInputs = ({ addressProps, setAddressProps }) => {
       />
       <label>Street Address</label>
       <input
+        disabled={disabled}
         type="text"
         onChange={(ev) => setAddressProps('streetAddress', ev.target.value)}
         placeholder="Street address"
@@ -22,6 +24,7 @@ const AddressInputs = ({ addressProps, setAddressProps }) => {
         <div>
           <label>City</label>
           <input
+            disabled={disabled}
             type="text"
             onChange={(ev) => setAddressProps('city', ev.target.value)}
             placeholder="City"
@@ -31,6 +34,7 @@ const AddressInputs = ({ addressProps, setAddressProps }) => {
         <div>
           <label>Postal Code</label>
           <input
+            disabled={disabled}
             type="text"
             onChange={(ev) => setAddressProps('postalCode', ev.target.value)}
             placeholder="Postal code"
@@ -40,6 +44,7 @@ const AddressInputs = ({ addressProps, setAddressProps }) => {
       </div>
       <label>Country</label>
       <input
+        disabled={disabled}
         type="text"
         onChange={(ev) => setAddressProps('country', ev.target.value)}
         placeholder="Country"
