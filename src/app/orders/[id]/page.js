@@ -10,6 +10,7 @@ import { useContext, useEffect, useState } from 'react'
 const OrderPage = () => {
   const { cleanCart } = useContext(CartContext)
   const [order, setOrder] = useState()
+  const [loadingOrders, setLoadingOrders] = useState(true)
   const { id } = useParams()
 
   useEffect(() => {
@@ -20,10 +21,12 @@ const OrderPage = () => {
     }
 
     if (id) {
+      setLoadingOrders(true)
       fetch('/api/orders?_id' + id).then((res) => {
         res.json().then((orderData) => {
           //por alguna razon aca trae un array, solucion temporal
           setOrder(orderData[0])
+          setLoadingOrders(false)
         })
       })
     }
@@ -43,6 +46,7 @@ const OrderPage = () => {
         <p>Thanks for your order</p>
         <p>We will call you when your order will be on the way.</p>
       </div>
+      {loadingOrders && <div>Loading order...</div>}
       {order && (
         <div className="grid grid-cols-2 gap-16">
           <div>
