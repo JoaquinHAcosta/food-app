@@ -34,7 +34,7 @@ const OrderPage = () => {
           orders.map((order, index) => (
             <div
               key={index}
-              className="bg-gray-100 mb-2 p-4 rounded-lg flex items-center  gap-6"
+              className="bg-gray-100 mb-2 p-4 rounded-lg md:flex items-center  gap-6"
             >
               <div className="grow flex items-center gap-6">
                 <div>

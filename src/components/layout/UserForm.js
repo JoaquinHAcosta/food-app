@@ -25,7 +25,7 @@ const UserForm = ({ user, onSave }) => {
     if (propName === 'country') setCountry(value)
   }
   return (
-    <div className="flex gap-4">
+    <div className="md:flex gap-4">
       <div>
         <div className="p-2 rounded-lg relative max-w-[120px]">
           <EditableImage link={image} setLink={setImage} />
