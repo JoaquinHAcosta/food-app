@@ -73,7 +73,7 @@ const UserForm = ({ user, onSave }) => {
         {loggedInUserData.admin && (
           <div>
             <label
-              className="p-2 inline-flex items-center gap-2 block mb-2"
+              className="p-2 items-center gap-2 block mb-2"
               htmlFor="adminCb"
             >
               <input
@@ -82,8 +82,8 @@ const UserForm = ({ user, onSave }) => {
                 className=""
                 value={'1'}
                 checked={admin}
-                onClick={(ev) => setAdmin(ev.target.checked)}
-              />
+                onChange={(ev) => setAdmin(ev.target.checked)}
+              />{' '}
               <span>Admin</span>
             </label>
           </div>

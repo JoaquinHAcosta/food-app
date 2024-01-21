@@ -108,7 +108,7 @@ const MenuItem = (menuItem) => {
                       className="flex items-center gap-2 p-4 border rounded-md mb-1"
                     >
                       <input
-                        onClick={(ev) => handleExtraThingClick(ev, extraThing)}
+                        onChange={(ev) => handleExtraThingClick(ev, extraThing)}
                         type="checkbox"
                         name={extraThing.name}
                       />

@@ -10,7 +10,7 @@ const AddressInputs = ({ addressProps, setAddressProps, disabled = false }) => {
         type="tel"
         onChange={(ev) => setAddressProps('phone', ev.target.value)}
         placeholder="Phone number"
-        value={phone}
+        value={phone || ''}
       />
       <label>Street Address</label>
       <input
@@ -18,7 +18,7 @@ const AddressInputs = ({ addressProps, setAddressProps, disabled = false }) => {
         type="text"
         onChange={(ev) => setAddressProps('streetAddress', ev.target.value)}
         placeholder="Street address"
-        value={streetAddress}
+        value={streetAddress || ''}
       />
       <div className="grid grid-cols-2 gap-2">
         <div>
@@ -28,7 +28,7 @@ const AddressInputs = ({ addressProps, setAddressProps, disabled = false }) => {
             type="text"
             onChange={(ev) => setAddressProps('city', ev.target.value)}
             placeholder="City"
-            value={city}
+            value={city || ''}
           />
         </div>
         <div>
@@ -38,7 +38,7 @@ const AddressInputs = ({ addressProps, setAddressProps, disabled = false }) => {
             type="text"
             onChange={(ev) => setAddressProps('postalCode', ev.target.value)}
             placeholder="Postal code"
-            value={postalCode}
+            value={postalCode || ''}
           />
         </div>
       </div>
@@ -48,7 +48,7 @@ const AddressInputs = ({ addressProps, setAddressProps, disabled = false }) => {
         type="text"
         onChange={(ev) => setAddressProps('country', ev.target.value)}
         placeholder="Country"
-        value={country}
+        value={country || ''}
       />
     </>
   )

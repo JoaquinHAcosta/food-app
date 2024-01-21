@@ -1,4 +1,5 @@
 'use client'
+
 import { useProfile } from '@/components/UseProfile'
 import UserForm from '@/components/layout/UserForm'
 import UserTabs from '@/components/layout/UserTabs'
@@ -15,7 +16,6 @@ const EditUserPage = () => {
     fetch('/api/profile?_id=' + id).then((res) => {
       res.json().then((user) => {
         setUser(user)
-        console.log(user)
       })
     })
   }, [])
