@@ -50,8 +50,8 @@ export function AppProvider({ children }) {
   }
 
   const removeCartProduct = (indexToRemove) => {
-    setCartProducts((prevCartProducst) => {
-      const newCartProducts = prevCartProducst.filter(
+    setCartProducts((prevCartProducts) => {
+      const newCartProducts = prevCartProducts.filter(
         (v, index) => index !== indexToRemove
       )
       saveCartProductsToLocalStorage(newCartProducts)

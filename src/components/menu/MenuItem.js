@@ -87,7 +87,7 @@ const MenuItem = (menuItem) => {
                       className="flex items-center gap-2 p-4 border rounded-md mb-1"
                     >
                       <input
-                        onClick={() => setSelectedSize(size)}
+                        onChange={() => setSelectedSize(size)}
                         checked={selectedSize?.name === size.name}
                         type="radio"
                         name="size"

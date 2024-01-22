@@ -21,8 +21,6 @@ const MenuItemsPage = () => {
     return 'Loading user info...'
   }
 
-  console.log(menuItems)
-
   if (!data.admin) {
     return 'Not an admin'
   }

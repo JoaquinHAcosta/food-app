@@ -1,12 +1,19 @@
 import Image from 'next/image'
 import Trash from '@/components/icons/trash'
-import { cartProductPrice } from '../AppContext'
+import { CartContext, cartProductPrice } from '../AppContext'
+import { useContext } from 'react'
 
-const CartProduct = ({ product, onRemove }) => {
+const CartProduct = ({ index, product, onRemove }) => {
+  const { removeCartProduct } = useContext(CartContext)
   return (
     <div className="flex items-center gap-4 border-b py-4">
       <div className="w-24">
-        <Image src={product.image} height={240} width={240} alt="" />
+        <Image
+          src={product.image}
+          height={240}
+          width={240}
+          alt={product.name}
+        />
       </div>
       <div className="grow">
         <h3 className="font-semibold">{product.name}</h3>
@@ -28,7 +35,11 @@ const CartProduct = ({ product, onRemove }) => {
       <div className="text-lg font-semibold">${cartProductPrice(product)}</div>
       {!!onRemove && (
         <div className="ml-2">
-          <button type="button" onClick={() => onRemove(index)} className="p-2">
+          <button
+            type="button"
+            onClick={() => removeCartProduct(index)}
+            className="p-2"
+          >
             <Trash />
           </button>
         </div>
