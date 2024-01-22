@@ -30,7 +30,6 @@ export const authOptions = {
       async authorize(credentials, req) {
         const email = credentials?.email
         const password = credentials?.password
-        console.log(credentials)
 
         mongoose.connect(process.env.MONGO_URL)
         const user = await User.findOne({ email })
@@ -49,16 +48,13 @@ export const authOptions = {
 export async function isAdmin() {
   const session = await getServerSession(authOptions)
   const userEmail = session?.user?.email
-
   if (!userEmail) {
     return false
   }
-
   const userInfo = await UserInfo.findOne({ email: userEmail })
   if (!userInfo) {
     return false
   }
-
   return userInfo.admin
 }
 
