@@ -1,4 +1,5 @@
-import { authOptions, isAdmin } from '@/app/api/auth/[...nextauth]/route'
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { isAdmin } from '@/libs/protectApi'
 import mongoose from 'mongoose'
 import { getServerSession } from 'next-auth'
 import { Order } from '@/models/Order'
